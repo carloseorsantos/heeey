@@ -7,7 +7,7 @@ public final class SettingsStore: ObservableObject {
     public static let shared = SettingsStore()
 
     @AppStorage("userHandle") public var userHandle: String = "carlos"
-    @AppStorage("serverURL") public var serverURL: String = "wss://heeey.live/ws"
+    @AppStorage("serverURL") public var serverURL: String = "ws://127.0.0.1:3000/ws"
     @AppStorage("defaultThemeRaw") private var defaultThemeRaw: String = TickerTheme.ledGreen.rawValue
     @AppStorage("scrollSpeed") public var scrollSpeed: Double = 60.0 // Pixels per second
     @AppStorage("soundEnabled") public var soundEnabled: Bool = true
