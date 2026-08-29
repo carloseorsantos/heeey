@@ -43,28 +43,43 @@ export default function HomePage() {
         theme="led_green"
       />
 
-      {/* Handle Search Box */}
-      <div className="max-w-md mx-auto bg-neutral-900/80 border border-neutral-800 p-2 rounded-2xl shadow-xl backdrop-blur-md">
-        <form onSubmit={handleJoin} className="flex items-center gap-2">
-          <div className="relative flex-grow flex items-center pl-3">
-            <span className="text-neutral-500 font-mono text-sm">heeey.click/</span>
-            <input
-              type="text"
-              value={handle}
-              onChange={(e) => setHandle(e.target.value)}
-              placeholder="seu-amigo"
-              className="w-full pl-1 pr-3 py-2 bg-transparent text-white placeholder-neutral-600 text-sm font-medium focus:outline-none"
-              required
-            />
-          </div>
-          <button
-            type="submit"
-            className="flex items-center gap-1.5 bg-green-500 hover:bg-green-400 text-black px-4 py-2.5 rounded-xl font-bold text-xs transition-all shadow-[0_0_12px_rgba(38,255,89,0.3)] active:scale-95 cursor-pointer"
+      {/* Actions: Search Handle or Download Mac App */}
+      <div className="space-y-4 max-w-md mx-auto">
+        <div className="bg-neutral-900/80 border border-neutral-800 p-2 rounded-2xl shadow-xl backdrop-blur-md">
+          <form onSubmit={handleJoin} className="flex items-center gap-2">
+            <div className="relative flex-grow flex items-center pl-3">
+              <span className="text-neutral-500 font-mono text-sm">heeey.click/</span>
+              <input
+                type="text"
+                value={handle}
+                onChange={(e) => setHandle(e.target.value)}
+                placeholder="seu-amigo"
+                className="w-full pl-1 pr-3 py-2 bg-transparent text-white placeholder-neutral-600 text-sm font-medium focus:outline-none"
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              className="flex items-center gap-1.5 bg-green-500 hover:bg-green-400 text-black px-4 py-2.5 rounded-xl font-bold text-xs transition-all shadow-[0_0_12px_rgba(38,255,89,0.3)] active:scale-95 cursor-pointer"
+            >
+              <span>Acessar</span>
+              <ArrowRight className="w-3.5 h-3.5" />
+            </button>
+          </form>
+        </div>
+
+        {/* Mac App Download Button */}
+        <div className="pt-2">
+          <a
+            href="/downloads/Heeey-Installer.dmg"
+            download
+            className="inline-flex items-center justify-center gap-2 w-full py-3 px-5 rounded-2xl bg-neutral-900 hover:bg-neutral-800 border border-neutral-700/80 hover:border-neutral-600 text-white font-semibold text-xs transition-all shadow-lg active:scale-98"
           >
-            <span>Acessar</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </button>
-        </form>
+            <Monitor className="w-4 h-4 text-green-400" />
+            <span>Baixar App para Mac (Installer .DMG)</span>
+            <span className="text-[10px] text-neutral-400 font-mono bg-neutral-800 px-2 py-0.5 rounded-full border border-neutral-700">422 KB</span>
+          </a>
+        </div>
       </div>
 
       {/* Feature Pillars */}
