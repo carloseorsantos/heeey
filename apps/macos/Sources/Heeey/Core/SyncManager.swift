@@ -13,14 +13,22 @@ public final class SyncManager: ObservableObject {
     private var session: URLSession
     private var isIntentionalDisconnect: Bool = false
     private var retryCount = 0
+    private var isReconnecting: Bool = false
 
     private init() {
-        self.session = URLSession(configuration: .default)
+        let config = URLSessionConfiguration.default
+        config.waitsForConnectivity = false
+        config.timeoutIntervalForRequest = 10
+        self.session = URLSession(configuration: config)
     }
 
-    public func connect() {
+    public func connect(resetRetry: Bool = true) {
+        if resetRetry {
+            retryCount = 0
+        }
         disconnect()
         isIntentionalDisconnect = false
+        isReconnecting = false
 
         let handle = SettingsStore.shared.userHandle.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !handle.isEmpty else {
@@ -28,25 +36,27 @@ public final class SyncManager: ObservableObject {
             return
         }
 
-        var urlString = SettingsStore.shared.serverURL
-        if !urlString.contains("?") {
-            urlString += "?handle=\(handle)"
-        } else {
-            urlString += "&handle=\(handle)"
-        }
-
-        guard let url = URL(string: urlString) else {
+        let urlString = SettingsStore.shared.serverURL.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !urlString.isEmpty, let url = URL(string: urlString) else {
             lastError = "URL de servidor inválida"
             return
         }
 
-        let task = session.webSocketTask(with: url)
+        var components = URLComponents(url: url, resolvingAgainstBaseURL: false)
+        var queryItems = components?.queryItems ?? []
+        if !queryItems.contains(where: { $0.name == "handle" }) {
+            queryItems.append(URLQueryItem(name: "handle", value: handle))
+        }
+        components?.queryItems = queryItems
+
+        guard let finalURL = components?.url else {
+            lastError = "URL final inválida"
+            return
+        }
+
+        let task = session.webSocketTask(with: finalURL)
         self.webSocketTask = task
         task.resume()
-
-        self.isConnected = true
-        self.lastError = nil
-        self.retryCount = 0
 
         listenForMessages()
     }
@@ -67,6 +77,10 @@ public final class SyncManager: ObservableObject {
 
                 switch result {
                 case .success(let message):
+                    self.isConnected = true
+                    self.lastError = nil
+                    self.retryCount = 0
+
                     switch message {
                     case .string(let text):
                         self.handleIncomingText(text)
@@ -92,12 +106,18 @@ public final class SyncManager: ObservableObject {
     }
 
     private func scheduleReconnect() {
+        guard !isReconnecting else { return }
+        isReconnecting = true
+
         retryCount += 1
-        let delay = min(30.0, pow(2.0, Double(min(retryCount, 5))))
+        // Backoff: 5s, 10s, 20s, up to 60s
+        let delay = min(60.0, max(5.0, pow(2.0, Double(min(retryCount, 6)))))
+
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak self] in
             Task { @MainActor [weak self] in
                 guard let self = self, !self.isIntentionalDisconnect, !self.isConnected else { return }
-                self.connect()
+                self.isReconnecting = false
+                self.connect(resetRetry: false)
             }
         }
     }

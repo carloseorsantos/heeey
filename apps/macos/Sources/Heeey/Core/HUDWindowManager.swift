@@ -15,7 +15,7 @@ public final class HUDWindowManager: ObservableObject {
     private var dismissWorkItem: DispatchWorkItem?
 
     private init() {
-        setupPanel()
+        // Deferred initialization to allow NSApplication to complete bootstrap
     }
 
     public func setupPanel() {
@@ -74,6 +74,11 @@ public final class HUDWindowManager: ObservableObject {
         // If Focus Mode is active, do not show HUD to prevent interruption/embarrassment
         if FocusManager.shared.isFocusActive {
             return
+        }
+
+        // Lazy setup if needed
+        if panel == nil {
+            setupPanel()
         }
 
         if isVisible {
