@@ -47,7 +47,7 @@ export default function HomePage() {
       <div className="max-w-md mx-auto bg-neutral-900/80 border border-neutral-800 p-2 rounded-2xl shadow-xl backdrop-blur-md">
         <form onSubmit={handleJoin} className="flex items-center gap-2">
           <div className="relative flex-grow flex items-center pl-3">
-            <span className="text-neutral-500 font-mono text-sm">heeey.live/</span>
+            <span className="text-neutral-500 font-mono text-sm">heeey.click/</span>
             <input
               type="text"
               value={handle}

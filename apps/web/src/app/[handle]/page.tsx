@@ -25,7 +25,7 @@ export default async function HandlePage({ params }: PageProps) {
           <span>Voltar para o início</span>
         </Link>
         <span className="text-[11px] font-mono text-neutral-500">
-          heeey.live/{handle}
+          heeey.click/{handle}
         </span>
       </div>
 

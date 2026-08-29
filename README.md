@@ -17,7 +17,7 @@
 
 **Heeey!** é um app open-source para macOS pensado para aproximar squads, amigos e criadores de forma divertida e sem atrito.
 
-Compartilhe o seu link pessoal (ex: `heeey.live/carlos`). Seus amigos abrem a página no celular ou navegador — sem precisar instalar nada — e enviam recados rápidos, reações com emojis e estilos de LED customizados. 
+Compartilhe o seu link pessoal (ex: `heeey.click/carlos`). Seus amigos abrem a página no celular ou navegador — sem precisar instalar nada — e enviam recados rápidos, reações com emojis e estilos de LED customizados. 
 
 Instantaneamente, um letreiro animado em estilo **Dynamic Island / HUD Retrô** desliza do topo da sua tela no Mac, rola o texto a 60/120fps com efeitos visuais e sons retrô sintetizados, e recolhe suavemente quando a mensagem termina.
 
