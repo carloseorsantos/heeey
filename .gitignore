@@ -1,0 +1,41 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+*.swp
+*~
+
+# Xcode & Swift
+.build/
+Packages/
+Package.pins
+Package.resolved
+xcuserdata/
+*.xcworkspace/xcuserdata/
+*.xcuserdatad/
+DerivedData/
+*.hmap
+*.xccheckout
+*.moved-aside
+
+# Node / Web
+node_modules/
+.next/
+out/
+build/
+dist/
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# IDEs
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace

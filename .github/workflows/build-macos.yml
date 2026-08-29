@@ -1,0 +1,29 @@
+name: Build & Test macOS App
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'apps/macos/**'
+      - '.github/workflows/build-macos.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'apps/macos/**'
+      - '.github/workflows/build-macos.yml'
+
+jobs:
+  test-macos:
+    runs-on: macos-14
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode.app
+
+      - name: Build & Run Swift Tests
+        run: |
+          cd apps/macos
+          swift test -v
