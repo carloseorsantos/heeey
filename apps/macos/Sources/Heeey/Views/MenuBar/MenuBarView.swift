@@ -120,16 +120,6 @@ public struct MenuBarView: View {
     }
 
     private func openSettingsWindow() {
-        let settingsWindow = NSWindow(
-            contentRect: NSRect(x: 0, y: 0, width: 440, height: 460),
-            styleMask: [.titled, .closable, .miniaturizable],
-            backing: .buffered,
-            defer: false
-        )
-        settingsWindow.title = "Preferências do Heeey!"
-        settingsWindow.center()
-        settingsWindow.contentView = NSHostingView(rootView: SettingsSheetView())
-        settingsWindow.makeKeyAndOrderFront(nil)
-        NSApp.activate(ignoringOtherApps: true)
+        SettingsWindowManager.shared.showSettings()
     }
 }

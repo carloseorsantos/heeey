@@ -36,6 +36,7 @@ public final class HUDWindowManager: ObservableObject {
         newPanel.backgroundColor = .clear
         newPanel.hasShadow = false
         newPanel.ignoresMouseEvents = true
+        newPanel.isReleasedWhenClosed = false
         newPanel.collectionBehavior = [.canJoinAllSpaces, .stationary, .ignoresCycle, .fullScreenAuxiliary]
         newPanel.contentView = hostingView
         newPanel.orderOut(nil)
